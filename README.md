@@ -1,335 +1,196 @@
-# CampusCart - University Marketplace Frontend
+# CampusCart - E-commerce Platform for Students
 
-A modern, feature-rich ecommerce marketplace built specifically for university students to buy and sell textbooks, electronics, dorm supplies, and campus essentials.
+A modern, microservices-based e-commerce platform built specifically for university students to buy and sell items within campus communities.
 
-## 🎯 Features
+## 🏗️ Monorepo Architecture
 
-- **Modern UI/UX**: Built with Next.js 16, React 19, and shadcn/ui components
-- **Responsive Design**: Mobile-first design that works seamlessly on all devices
-- **Type-Safe**: Full TypeScript implementation with strict type checking
-- **Modular Architecture**: Feature-based component organization
-- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
-- **Performance**: Optimized with Next.js App Router and Turbopack
-
-## 🎨 Design System
-
-### Color Palette
-
-- **Primary**: `#2563eb` (Blue) - Call-to-action buttons, links
-- **Secondary**: `#8b5cf6` (Purple) - Accents, featured items
-- **Background**: `#f8fafc` (Light Gray) - Page background
-- **Text**: `#1e293b` (Dark Blue-Gray) - Primary text
-
-### Typography
-
-- **Font Family**: Inter (Google Fonts)
-- Clean, modern sans-serif optimized for readability
-
-## 📦 Tech Stack
-
-- **Framework**: Next.js 16.0.1 (App Router, Turbopack)
-- **React**: 19.2.0
-- **TypeScript**: 5.x (strict mode)
-- **Styling**: Tailwind CSS 4.x
-- **UI Components**: shadcn/ui (Radix UI primitives)
-- **Icons**: Lucide React
-- **State Management**: React Hooks (useState, useEffect)
-
-## 🏗️ Project Structure
+This repository contains all microservices for the CampusCart platform:
 
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout with Inter font
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles & theme variables
-├── components/
-│   ├── auth/              # Authentication components
-│   │   └── AuthForms.tsx  # Login & Register forms
-│   ├── cart/              # Shopping cart
-│   │   └── ShoppingCart.tsx
-│   ├── layout/            # Layout components
-│   │   ├── Header.tsx     # Navigation header
-│   │   └── Footer.tsx     # Site footer
-│   ├── products/          # Product components
-│   │   ├── ProductCard.tsx
-│   │   ├── ProductGrid.tsx
-│   │   └── ProductFilters.tsx
-│   ├── shared/            # Reusable utilities
-│   │   ├── LoadingSpinner.tsx
-│   │   └── ErrorMessage.tsx
-│   └── ui/                # shadcn/ui base components
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── input.tsx
-│       ├── badge.tsx
-│       ├── dialog.tsx
-│       ├── label.tsx
-│       ├── select.tsx
-│       ├── textarea.tsx
-│       └── separator.tsx
-├── lib/
-│   ├── utils.ts           # Utility functions (cn, formatPrice, etc.)
-│   └── mockData.ts        # Sample product data
-└── types/
-    └── index.ts           # TypeScript type definitions
+ecommerce/
+├── frontend/              # Next.js 16 + TypeScript (Client-facing app)
+├── inventory-service/     # NestJS (Product & catalog management)
+├── gateway/               # API Gateway (To be implemented)
+├── orders/               # Order processing service (To be implemented)
+└── payments/             # Payment processing service (To be implemented)
 ```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- **pnpm** (Package Manager)
-- Git
-
-### Installation
-
-1. **Install pnpm** (if not already installed):
-
-   ```bash
-   npm install -g pnpm
-   ```
-
-2. **Navigate to frontend directory**:
-
-   ```bash
-   cd frontend
-   ```
-
-3. **Install dependencies**:
-
-   ```bash
-   pnpm install
-   ```
-
-4. **Run development server**:
-
-   ```bash
-   pnpm dev
-   ```
-
-5. **Open browser**:
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Available Scripts
-
-```bash
-pnpm dev              # Start development server (Turbopack)
-pnpm build            # Build for production
-pnpm start            # Start production server
-pnpm lint             # Run ESLint
-pnpm lint:fix         # Fix ESLint errors automatically
-pnpm format           # Format code with Prettier
-pnpm format:check     # Check if code is formatted
-```
-
-## 🔧 Code Quality & Pre-commit Hooks
-
-This project uses **Husky** for pre-commit hooks that automatically:
-
-- ✅ Format code with **Prettier**
-- ✅ Fix linting errors with **ESLint**
-- ✅ Ensure code quality before commits
-
-### Pre-commit Hook Setup
-
-When you commit code, the following happens automatically:
-
-1. **Prettier** formats your staged files
-2. **ESLint** checks and fixes linting issues
-3. If any unfixable errors exist, commit is blocked
-
-For detailed information, see [DEVELOPMENT.md](./DEVELOPMENT.md)
-
-### Manual Commands
-
-```bash
-# Format all files
-pnpm format
-
-# Check formatting
-pnpm format:check
-
-# Lint all files
-pnpm lint
-
-# Fix linting errors
-pnpm lint:fix
-```
-
-## 📱 Key Components
-
-### Header Component
-
-- Responsive navigation with mobile menu
-- Search bar with icon
-- Cart with item count badge
-- User profile dropdown
-- "Sell Item" CTA button
-
-### Product Components
-
-**ProductCard**
-
-- Product image with hover effects
-- Wishlist heart button
-- Condition badge
-- Price display
-- Seller information
-- Location tag
-
-**ProductGrid**
-
-- Responsive grid layout (1-4 columns)
-- Loading states
-- Error handling
-- Empty state messaging
-
-**ProductFilters**
-
-- Search input
-- Category dropdown
-- Price range inputs
-- Condition badges
-- Sort options
-- Active filter count
-
-### Shopping Cart
-
-- Slide-in drawer (mobile-friendly)
-- Item quantity controls
-- Remove item functionality
-- Subtotal, tax, and total calculations
-- Empty cart state
-- Checkout button
-
-### Authentication Forms
-
-- Login dialog with email/password
-- Registration form with validation
-- Form error handling
-- Switch between login/register
-- Password strength requirements
-- University field for students
-
-## 🎨 Styling Approach
-
-### Tailwind CSS Configuration
-
-- Inline theme configuration using `@theme`
-- CSS custom properties for colors
-- Dark mode support
-- Responsive breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
-
-### Component Patterns
-
-- **cn()** utility for conditional classes
-- Class Variance Authority (CVA) for variant-based styling
-- Consistent spacing and sizing scales
-- Hover and focus states for accessibility
-
-## 📝 Type Definitions
-
-### Core Types
-
-**Product**
-
-```typescript
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  category: Category;
-  condition: Condition;
-  images: string[];
-  sellerId: string;
-  sellerName: string;
-  location: string;
-  // ... additional fields
-}
-```
-
-**Cart**
-
-```typescript
-interface Cart {
-  items: CartItem[];
-  totalItems: number;
-  subtotal: number;
-  tax: number;
-  total: number;
-}
-```
-
-See `src/types/index.ts` for complete type definitions.
-
-## 🔧 Utility Functions
-
-### Formatting
-
-- `formatPrice(price: number)`: Format to USD currency
-- `formatDate(date: Date | string)`: Human-readable date
-- `truncateText(text: string, length: number)`: Truncate with ellipsis
-- `slugify(text: string)`: Generate URL-friendly slugs
-
-### Styling
-
-- `cn(...inputs)`: Merge Tailwind classes with conflict resolution
-
-## 🎯 Best Practices Implemented
-
-### Code Quality
-
-- ✅ Comprehensive JSDoc comments on all functions
-- ✅ Strict TypeScript with no implicit any
-- ✅ Modular components (< 150 lines each)
-- ✅ Consistent naming conventions
-- ✅ Proper error boundaries and loading states
-
-### Accessibility
-
-- ✅ Semantic HTML elements
-- ✅ ARIA labels for screen readers
-- ✅ Keyboard navigation support
-- ✅ Focus indicators
-- ✅ Alt text for images
-
-### Performance
-
-- ✅ Next.js Image optimization
-- ✅ Code splitting by route
-- ✅ Lazy loading of components
-- ✅ Optimized bundle size
-
-### User Experience
-
-- ✅ Loading spinners for async operations
-- ✅ Error messages with context
-- ✅ Form validation with helpful errors
-- ✅ Empty states with guidance
-- ✅ Mobile-responsive design
-
-## 🌐 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## 📄 License
-
-This project is part of the CampusCart ecommerce platform.
-
-## 🤝 Contributing
-
-1. Follow the established code style
-2. Add JSDoc comments to new functions
-3. Maintain type safety
-4. Test on multiple screen sizes
-5. Ensure accessibility standards
 
 ---
 
-**Built with ❤️ for university students**
+## 📦 Services
+
+### ✅ Frontend
+- **Framework**: Next.js 16, React 19, TypeScript
+- **Styling**: Tailwind CSS v4, shadcn/ui
+- **Port**: `3000`
+- **Status**: ✅ Production-ready
+- **Documentation**: [Frontend README](./frontend/README.md)
+
+### 🔨 Inventory Service
+- **Framework**: NestJS, TypeScript
+- **Port**: `3000` (default NestJS)
+- **Status**: 🔨 In Development
+- **Documentation**: [Inventory README](./inventory-service/README.md)
+
+### ⏳ Upcoming Services
+- **Gateway**: API Gateway + Authentication
+- **Orders**: Order management & fulfillment
+- **Payments**: Payment processing integration
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 22.x or higher
+- npm/pnpm/yarn
+- Git
+
+### Running Services
+
+**Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+# Visit: http://localhost:3000
+```
+
+**Inventory Service:**
+```bash
+cd inventory-service
+pnpm install
+pnpm run start:dev
+# API: http://localhost:3000
+```
+
+---
+
+## 🛠️ Development Workflow
+
+### Working on a Service
+
+```bash
+# Navigate to the service
+cd <service-name>
+
+# Install dependencies
+npm install  # or pnpm install
+
+# Start development
+npm run dev  # or pnpm start:dev
+```
+
+### Git Workflow
+
+```bash
+# Create feature branch
+git checkout -b feature/service-name-feature
+
+# Make changes and commit
+git add .
+git commit -m "feat(service-name): description"
+
+# Push to remote
+git push origin feature/service-name-feature
+```
+
+---
+
+## 🔧 Technology Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS v4 |
+| **Backend** | NestJS, TypeScript |
+| **Database** | PostgreSQL (planned), Redis (planned) |
+| **Authentication** | JWT (planned) |
+| **File Storage** | AWS S3 / Cloudinary (planned) |
+| **Payments** | Stripe / PayPal (planned) |
+
+---
+
+## 📊 Implementation Status
+
+| Service | Status | Progress |
+|---------|--------|----------|
+| Frontend | ✅ Complete | 100% |
+| Inventory Service | 🔨 In Progress | 15% |
+| API Gateway | ⏳ Not Started | 0% |
+| Orders Service | ⏳ Not Started | 0% |
+| Payments Service | ⏳ Not Started | 0% |
+
+---
+
+## 🎯 Roadmap
+
+### Phase 1: Core Infrastructure (Current)
+- [x] Frontend UI/UX
+- [ ] Inventory Service MVP
+- [ ] API Gateway setup
+- [ ] Database setup (PostgreSQL)
+- [ ] Authentication service
+
+### Phase 2: E-commerce Features
+- [ ] Order management
+- [ ] Payment integration
+- [ ] User profiles & ratings
+- [ ] Product reviews
+
+### Phase 3: Advanced Features
+- [ ] Real-time messaging
+- [ ] Notifications system
+- [ ] Analytics dashboard
+- [ ] Search optimization
+
+---
+
+## 📝 Environment Variables
+
+Each service requires its own `.env` file. See individual service documentation:
+- [Frontend Environment Setup](./frontend/README.md)
+- [Inventory Service Environment Setup](./inventory-service/README.md)
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Commit Convention
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `style:` Code style changes
+- `refactor:` Code refactoring
+- `test:` Test additions/changes
+- `chore:` Build/config changes
+
+---
+
+## 📄 License
+
+This project is private and proprietary.
+
+---
+
+## 👨‍💻 Author
+
+**Khoo The Programmer**
+- GitHub: [@KhoTheProgrammer](https://github.com/KhoTheProgrammer)
+- Repository: [campus-cart](https://github.com/KhoTheProgrammer/campus-cart)
+
+---
+
+## 📞 Support
+
+For questions or issues, please open an issue on GitHub.
+
+---
+
+**Last Updated**: November 2, 2025
