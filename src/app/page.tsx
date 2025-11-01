@@ -1,65 +1,223 @@
-import Image from "next/image";
+"use client";
+
+import {
+  BookOpen,
+  Laptop,
+  Home as HomeIcon,
+  Sofa,
+  Shirt,
+  Dumbbell,
+  ArrowRight,
+  TrendingUp,
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { LoginForm, RegisterForm } from "@/components/auth/AuthForms";
+import { ShoppingCart } from "@/components/cart/ShoppingCart";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { ProductGrid } from "@/components/products/ProductGrid";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { getFeaturedProducts } from "@/lib/mockData";
+import { Cart, Category } from "@/types";
+
+const categories = [
+  {
+    name: "Textbooks",
+    icon: BookOpen,
+    value: "textbooks" as Category,
+    color: "bg-blue-100 text-blue-600",
+  },
+  {
+    name: "Electronics",
+    icon: Laptop,
+    value: "electronics" as Category,
+    color: "bg-purple-100 text-purple-600",
+  },
+  {
+    name: "Dorm Supplies",
+    icon: HomeIcon,
+    value: "dorm-supplies" as Category,
+    color: "bg-green-100 text-green-600",
+  },
+  {
+    name: "Furniture",
+    icon: Sofa,
+    value: "furniture" as Category,
+    color: "bg-yellow-100 text-yellow-600",
+  },
+  {
+    name: "Clothing",
+    icon: Shirt,
+    value: "clothing" as Category,
+    color: "bg-pink-100 text-pink-600",
+  },
+  {
+    name: "Sports",
+    icon: Dumbbell,
+    value: "sports" as Category,
+    color: "bg-orange-100 text-orange-600",
+  },
+];
 
 export default function Home() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [cart] = useState<Cart>({
+    items: [],
+    totalItems: 0,
+    subtotal: 0,
+    tax: 0,
+    total: 0,
+  });
+
+  const featuredProducts = getFeaturedProducts();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="flex min-h-screen flex-col">
+      <Header cartItemCount={cart.totalItems} onCartClick={() => setIsCartOpen(true)} />
+
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="from-primary/10 via-secondary/5 to-background bg-gradient-to-br px-4 py-20">
+          <div className="container mx-auto text-center">
+            <h1 className="text-foreground mb-6 text-4xl font-bold md:text-6xl">
+              Your Campus Marketplace
+            </h1>
+            <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl">
+              Buy and sell textbooks, electronics, dorm supplies, and more with fellow
+              students
+            </p>
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Button asChild size="lg" className="px-8 text-lg">
+                <Link href="/products">
+                  Browse Products
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="px-8 text-lg">
+                <Link href="/sell">Sell an Item</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="px-4 py-16">
+          <div className="container mx-auto">
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="text-foreground text-3xl font-bold">Shop by Category</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+              {categories.map((category) => (
+                <Link key={category.value} href={`/products?category=${category.value}`}>
+                  <Card className="group h-full cursor-pointer transition-all hover:shadow-lg">
+                    <CardContent className="flex flex-col items-center p-6 text-center">
+                      <div
+                        className={`rounded-full p-4 ${category.color} mb-4 transition-transform group-hover:scale-110`}
+                      >
+                        <category.icon className="h-8 w-8" />
+                      </div>
+                      <h3 className="text-foreground font-semibold">{category.name}</h3>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Products Section */}
+        <section className="bg-muted/30 px-4 py-16">
+          <div className="container mx-auto">
+            <div className="mb-8 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="text-primary h-6 w-6" />
+                <h2 className="text-foreground text-3xl font-bold">Featured Listings</h2>
+              </div>
+              <Button asChild variant="ghost">
+                <Link href="/products">
+                  View All
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <ProductGrid
+              products={featuredProducts}
+              onWishlistToggle={(id) => console.log("Toggle wishlist:", id)}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="px-4 py-16">
+          <div className="container mx-auto">
+            <h2 className="text-foreground mb-12 text-center text-3xl font-bold">
+              How CampusCart Works
+            </h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="text-center">
+                <div className="bg-primary text-primary-foreground mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold">
+                  1
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Browse & Search</h3>
+                <p className="text-muted-foreground">
+                  Find what you need from fellow students at your university
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="bg-primary text-primary-foreground mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold">
+                  2
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Connect & Meet</h3>
+                <p className="text-muted-foreground">
+                  Message sellers and arrange safe meetups on campus
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="bg-primary text-primary-foreground mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold">
+                  3
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Buy or Sell</h3>
+                <p className="text-muted-foreground">
+                  Complete your transaction and leave a review
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+
+      <Footer />
+
+      {/* Shopping Cart */}
+      <ShoppingCart
+        cart={cart}
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        onUpdateQuantity={(id, qty) => console.log("Update:", id, qty)}
+        onRemoveItem={(id) => console.log("Remove:", id)}
+      />
+
+      {/* Auth Forms */}
+      <LoginForm
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onSwitchToRegister={() => {
+          setIsLoginOpen(false);
+          setIsRegisterOpen(true);
+        }}
+      />
+      <RegisterForm
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+        onSwitchToLogin={() => {
+          setIsRegisterOpen(false);
+          setIsLoginOpen(true);
+        }}
+      />
     </div>
   );
 }
