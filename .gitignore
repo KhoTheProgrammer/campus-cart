@@ -2,7 +2,13 @@
 node_modules/
 .pnp
 .pnp.js
+.pnp.*
 .yarn/install-state.gz
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # Testing
 coverage/
@@ -17,6 +23,7 @@ out/
 
 # Environment variables
 .env
+.env*
 .env*.local
 .env.development
 .env.test
@@ -34,6 +41,7 @@ lerna-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+*.pem
 *.swp
 *.swo
 *~
@@ -55,8 +63,15 @@ temp/
 *.sqlite3
 *.db
 
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
 # Miscellaneous
 .turbo
 .vercel
 .cache
 .eslintcache
+
+# Local documentation
+local documentations/
